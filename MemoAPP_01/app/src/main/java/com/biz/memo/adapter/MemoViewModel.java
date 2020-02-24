@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 import com.biz.memo.domain.MemoVO;
 import com.biz.memo.repository.MemoRepository;
@@ -20,7 +21,7 @@ import java.util.List;
 public class MemoViewModel extends AndroidViewModel {
 
     private MemoRepository memoRepository;
-    private List<MemoVO> memoList;
+    private LiveData<List<MemoVO>> memoList;
 
     public MemoViewModel(@NonNull Application application) {
         super(application);
@@ -28,12 +29,14 @@ public class MemoViewModel extends AndroidViewModel {
         this.memoList = memoRepository.selectAll();
     }
 
-    public List<MemoVO> selectAll() {
+    public LiveData<List<MemoVO>> selectAll() {
         return this.memoList;
     }
 
     public void insert(MemoVO memoVO) {
         memoRepository.insert(memoVO);
     }
+
+    public void delete(MemoVO memoVO) { memoRepository.delete(memoVO); }
 
 }

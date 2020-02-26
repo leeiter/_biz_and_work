@@ -12,10 +12,28 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        // App 을  phone에 빌드(Deploy)하는 정책에
+        // proguard 정책을 적용할 수 있다.
+        //  App 빌드하는 파일을 압축할 것이냐 말것이냐 라는 정책
+        // 아래의 2가지 속성값을 true로 설정하므로서
+        // App의 빌드되는 파일 크기를 최소한으로 줄이는 압축을 수행하고
+        // *.class 파일들을 난독화하여 혹시 리버스 엔지니어링으로
+        // 소스코드를 복원하는 것을 줄일 수 있도록 한다.
+        //      minifyEnabled true
+        //      shrinkResources true
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -27,4 +45,29 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+}
+
+repositories {
+    google()
+}
+
+dependencies {
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+}
+
+dependencies {
+    implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.7.1'
+    implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.7.1'
 }
